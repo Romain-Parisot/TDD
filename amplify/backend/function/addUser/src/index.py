@@ -6,7 +6,7 @@ from typing import Any
 from boto3.dynamodb.conditions import Key
 
 def handler(event, context):
-    TABLE_NAME = os.environ.get('STORAGE_USERTABLE_NAME', 'UserTable-dev')
+    TABLE_NAME = os.environ.get('STORAGE_USERTABLE_NAME', 'UserTable')
     REGION = 'eu-west-1'
 
     dynamodb = boto3.resource('dynamodb', region_name=REGION)  # type: Any
