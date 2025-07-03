@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/adduser": {
+      "name": "/adduser",
+      "lambdaFunction": "addUser",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
