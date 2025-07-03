@@ -23,10 +23,11 @@ def handler(event, context):
             }
 
         user_id = str(uuid.uuid4())
+        print(f"Generated user ID: {user_id}")
 
         table.put_item(Item={
             'email': email,
-            'id': user_id
+            'user_id': user_id
         })
 
         return {

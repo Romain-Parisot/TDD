@@ -21,18 +21,23 @@ def handler(event, context):
                 'body': json.dumps({'error': 'Email query parameter is required'})
             }
 
-        response = table.get_item(Key={'email': email})
-        item = response.get('Item')
+        response = table.query(
+            IndexName='email-index',
+            KeyConditionExpression=Key('email').eq(email)
+        )
+        items = response.get('Items', [])
 
-        if not item:
+        if not items:
             return {
                 'statusCode': 404,
                 'body': json.dumps({'error': 'User not found'})
             }
 
+        user = items[0]
+
         return {
             'statusCode': 200,
-            'body': json.dumps(item)
+            'body': json.dumps(user)
         }
 
     except Exception as e:

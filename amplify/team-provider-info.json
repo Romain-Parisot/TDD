@@ -19,11 +19,11 @@
         },
         "addUser": {
           "deploymentBucketName": "amplify-tdd-dev-53854-deployment",
-          "s3Key": "amplify-builds/addUser-4c52782b365543306263-build.zip"
+          "s3Key": "amplify-builds/addUser-665a51306c626656434a-build.zip"
         },
         "getUser": {
           "deploymentBucketName": "amplify-tdd-dev-53854-deployment",
-          "s3Key": "amplify-builds/getUser-556f62717a366a4e654b-build.zip"
+          "s3Key": "amplify-builds/getUser-44317673496134524154-build.zip"
         }
       },
       "storage": {
