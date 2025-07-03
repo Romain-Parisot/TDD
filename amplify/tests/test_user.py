@@ -4,10 +4,21 @@ import pytest
 import os
 from typing import Any
 from moto import mock_dynamodb
+import sys
+import importlib.util
+
 
 TABLE_NAME = "UserTable"
 REGION = "eu-west-1"
 
+
+def import_handler(path: str):
+    spec = importlib.util.spec_from_file_location("module.name", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.handler
 
 @pytest.fixture(scope="function")
 def dynamodb_mock():
@@ -38,10 +49,16 @@ def dynamodb_mock():
 
         os.environ['STORAGE_USERTABLE_NAME'] = TABLE_NAME
 
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'backend', 'function'))
+
+        add_user_path = os.path.join(base_dir, 'addUser', 'src', 'index.py')
+        get_user_path = os.path.join(base_dir, 'getUser', 'src', 'index.py')
+
         global add_user_handler
         global get_user_handler
-        from amplify.backend.function.addUser.src.index import handler as add_user_handler
-        from amplify.backend.function.getUser.src.index import handler as get_user_handler
+
+        add_user_handler = import_handler(add_user_path)
+        get_user_handler = import_handler(get_user_path)
 
         yield
 
